@@ -22,7 +22,7 @@ const Dashboard = () => {
     });
 
     return (
-        <div className="p-6 bg-gray-500 min-h-screen">
+        <div className="p-6 bg-[#0D0D0D] min-h-screen text-[#FFFFFF]">
             <h1 className="text-2xl font-bold mb-4">DevTrace Dashboard</h1>
             <div className="flex flex-col sm:flex-row">
                 <FilterSidebar filters={filters} setFilters={setFilters} />
