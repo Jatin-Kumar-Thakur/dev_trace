@@ -15,6 +15,11 @@ const Dashboard = () => {
             .catch((err) => console.error('Error fetching logs:', err));
     }, []);
 
+    useEffect(() => {
+        console.log(logs);
+    },
+[logs])
+
     const filteredLogs = logs.filter((log) => {
         const methodMatch = !filters.method || log.method === filters.method;
         const statusMatch = !filters.statusCode || String(log.statusCode).includes(filters.statusCode);
