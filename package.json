@@ -1,0 +1,25 @@
+{
+  "name": "devtrace-init",
+  "version": "1.0.0",
+  "bin": {
+    "devtrace-init": "./bin/index.js"
+  },
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jatin-Kumar-Thakur/dev_trace.git"
+  },
+  "author": "Jatin Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jatin-Kumar-Thakur/dev_trace/issues"
+  },
+  "homepage": "https://github.com/Jatin-Kumar-Thakur/dev_trace#readme",
+  "dependencies": {
+    "fs-extra": "^11.3.0"
+  }
+}
