@@ -12,7 +12,7 @@ exports.updateAutoDeleteSetting = async (req, res) => {
                 upsert: true, new: true
             }
         )
-        res.status(200).json({ message: "Setting Updated", data: updated })
+        res.status(200).json({ message: "Setting Updated....", data: updated })
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message })
     }
