@@ -1,4 +1,5 @@
 import React from 'react';
+import Switcher1 from '../helper/toggleButton';
 
 const FilterSidebar = ({ filters, setFilters }) => {
     const updateFilter = (field, value) => {
@@ -6,7 +7,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
     };
 
     return (
-        <div className="bg-[#121212] px-4 py-2 shadow  w-full sm:w-1/4 mb-4 sm:mb-0 sm:mr-4 border border-[#2A2A2A] text-[#FFFFFF]">
+        <div className="max-h-screen bg-[#121212] px-4 py-2 shadow  w-full sm:w-1/4 mb-4 sm:mb-0 sm:mr-4 border border-[#2A2A2A] text-[#FFFFFF]">
             <h2 className="font-bold mb-2">Filters</h2>
             <div className="mb-3">
                 <label className="block text-sm font-medium">Method</label>
@@ -31,6 +32,9 @@ const FilterSidebar = ({ filters, setFilters }) => {
                     value={filters.statusCode}
                     onChange={(e) => updateFilter('statusCode', e.target.value)}
                 />
+            </div>
+            <div>
+                <Switcher1 />
             </div>
         </div>
     );
