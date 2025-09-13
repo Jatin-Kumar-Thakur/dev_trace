@@ -1,43 +1,82 @@
-#!/usr/bin/env node
+import axios from "axios";
 
-const fs = require('fs-extra');
-const path = require('path');
-const readline = require('readline');
+export function devTraceLogger(options = {}) {
+  const apiUrl = options.endpoint || "http://localhost:8000/api/logs";
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+  return async (req, res, next) => {
+    const start = Date.now();
 
-const askMongoURI = () => {
-  return new Promise(resolve => {
-    rl.question('🔐 Enter your MongoDB URI: ', uri => {
-      rl.close();
-      resolve(uri);
+    const originalSend = res.send;
+    let responseBody;
+
+    res.send = function (body) {
+      responseBody = body;
+      return originalSend.call(this, body);
+    };
+
+    res.on("finish", async () => {
+      const duration = Date.now() - start;
+      const log = {
+        method: req.method,
+        url: req.originalUrl,
+        statusCode: res.statusCode,
+        headers: req.headers,
+        requestBody: req.body,
+        responseBody,
+        duration,
+        timestamp: new Date(),
+      };
+
+      try {
+        await axios.post(apiUrl, log);
+      } catch (err) {
+        console.error("Logging failed:", err.message);
+      }
     });
-  });
-};
 
-(async () => {
-  const mongoUri = await askMongoURI();
+    next();
+  };
+}
 
-  if (!mongoUri || !mongoUri.startsWith('mongodb')) {
-    console.error('❌ Invalid MongoDB URI.');
-    process.exit(1);
-  }
 
-  const currentDir = process.cwd();
-  const targetPath = path.join(currentDir, 'devtrace-app');
-  const templatePath = path.join(__dirname, '../template');
+// bin/index.js
+// import axios from "axios";
 
-  await fs.copy(templatePath, targetPath);
+// export function devTraceLogger(options = {}) {
+//   const apiUrl = options.endpoint || "http://localhost:8000/api/logs";
 
-  const backendEnvPath = path.join(targetPath, 'devtrace-backend', '.env');
-  const backendEnvContent = `MONGO_URI=${mongoUri}\nPORT=5000\n`;
-  fs.writeFileSync(backendEnvPath, backendEnvContent);
+//   return async (req, res, next) => {
+//     const start = Date.now();
 
-  console.log('\n✅ Devtrace project created successfully!');
-  console.log('➡ Next Steps:');
-  console.log(`1. cd devtrace-app/devtrace-backend && npm install && npm start`);
-  console.log(`2. cd ../devtrace-frontend && npm install && npm start`);
-})();
+//     const originalSend = res.send;
+//     let responseBody;
+
+//     res.send = function (body) {
+//       responseBody = body;
+//       return originalSend.call(this, body);
+//     };
+
+//     res.on("finish", async () => {
+//       const duration = Date.now() - start;
+//       const log = {
+//         method: req.method,
+//         url: req.originalUrl,
+//         statusCode: res.statusCode,
+//         headers: req.headers,
+//         requestBody: req.body,
+//         responseBody,
+//         duration,
+//         timestamp: new Date(),
+//       };
+
+//       try {
+//         await axios.post(apiUrl, log);
+//       } catch (err) {
+//         console.error("Logging failed:", err.message);
+//       }
+//     });
+
+//     next();
+//   };
+// }
+

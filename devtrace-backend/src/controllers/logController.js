@@ -1,6 +1,7 @@
-const Log = require('../models/Log');
+import Log from '../models/Log.js';
 
-exports.createLog = async (req, res) => {
+
+export const createLog = async (req, res) => {
   try {
     const log = new Log(req.body);
     await log.save();
@@ -10,7 +11,7 @@ exports.createLog = async (req, res) => {
   }
 };
 
-exports.getLogs = async (req, res) => {
+export const getLogs = async (req, res) => {
   try {
     const logs = await Log.find().sort({ timestamp: -1 });
     res.json(logs);

@@ -1,7 +1,7 @@
-const axios = require('axios');
+import axios from 'axios';
 
-function devTraceLogger(options = {}) {
-  const apiUrl = options.endpoint || 'http://localhost:5000/api/logs';
+export function devTraceLogger(options = {}) {
+  const apiUrl = options.endpoint || 'http://localhost:8000/api/logs';
 
   return async (req, res, next) => {
     const start = Date.now();
@@ -37,5 +37,3 @@ function devTraceLogger(options = {}) {
     next();
   };
 }
-
-module.exports = { devTraceLogger };

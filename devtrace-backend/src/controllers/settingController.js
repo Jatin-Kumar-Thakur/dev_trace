@@ -1,6 +1,6 @@
-const Settings = require('../models/Setting')
+import Settings from '../models/Setting.js';
 
-exports.updateAutoDeleteSetting = async (req, res) => {
+export const updateAutoDeleteSetting = async (req, res) => {
     try {
         const { enable } = req.body;
         const updated = await Settings.findOneAndUpdate(
@@ -18,7 +18,7 @@ exports.updateAutoDeleteSetting = async (req, res) => {
     }
 };
 
-exports.getSettings = async (req, res) => {
+export const getSettings = async (req, res) => {
     try {
         const data = await Settings.findOne();
         res.status(200).json(data || { autoDeleteLogs: false });

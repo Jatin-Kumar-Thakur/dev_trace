@@ -1,8 +1,9 @@
-const express = require("express");
+
+import express from "express";
 const router = express.Router();
-const { updateAutoDeleteSetting, getSettings } = require("../controllers/settingController");
+import { updateAutoDeleteSetting, getSettings } from "../controllers/settingController.js";
 
 router.get("/auto-delete", getSettings);
 router.post("/auto-delete", updateAutoDeleteSetting);
 
-module.exports = router;
+export default router;

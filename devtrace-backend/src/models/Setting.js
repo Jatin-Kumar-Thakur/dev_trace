@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const settingSchema = new mongoose.Schema({
     autoDeleteLogs: {
@@ -7,4 +7,5 @@ const settingSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("Settings", settingSchema);
+const Settings = mongoose.model("Settings", settingSchema);
+export default Settings;
